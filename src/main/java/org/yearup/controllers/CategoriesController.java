@@ -9,6 +9,7 @@ import org.yearup.service.CategoryService;
 import org.yearup.service.ProductService;
 
 import java.util.List;
+import java.util.Optional;
 
 // add the annotations to make this a REST controller
 @RestController
@@ -33,17 +34,19 @@ public class CategoriesController
     }
 
     // add the appropriate annotation for a get action
-    public List<Category> getAll()
+    @GetMapping
+    public List<Category> getAllCategories()
     {
         // find and return all categories
-        return null;
+        return categoryService.getAllCategories();
     }
 
     // add the appropriate annotation for a get action
+    @GetMapping("/{id}")
     public Category getById(@PathVariable int id)
     {
         // get the category by id
-        return null;
+        return categoryService.getById(id);
     }
 
     // the url to return all products in category 1 would look like this
@@ -52,7 +55,7 @@ public class CategoriesController
     public List<Product> getProductsById(@PathVariable int categoryId)
     {
         // get a list of product by categoryId
-        return null;
+        return productService.listByCategoryId(categoryId);
     }
 
     // add annotation to call this method for a POST action
