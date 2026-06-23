@@ -3,6 +3,7 @@ package org.yearup.controllers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.yearup.models.CartItem;
 import org.yearup.models.ShoppingCart;
 import org.yearup.models.User;
 import org.yearup.service.ShoppingCartService;
@@ -42,8 +43,12 @@ public class ShoppingCartController
     // add a POST method to add a product to the cart - the url should be
     // https://localhost:8080/cart/products/15  (15 is the productId to be added)
     // return the updated cart with status 201 Created
-    @PostMapping("/product/{productId}")
+    @PostMapping("/products/{productId}")
     public ResponseEntity<ShoppingCart> addProduct(@PathVariable int productId, Principal principal){
+
+        if (principal == null){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
         User user = userService.getByUserName(principal.getName());
 
         ShoppingCart cart = shoppingCartService.addProduct(user, productId);
@@ -55,8 +60,12 @@ public class ShoppingCartController
     // add a PUT method to update an existing product in the cart - the url should be
     // https://localhost:8080/cart/products/15  (15 is the productId to be updated)
     // the BODY should be a ShoppingCartItem - quantity is the only value that will be updated; return the cart (200 OK)
-
-    @PutMapping("")
+    @PutMapping("/products/{productId}")
+    public ResponseEntity<ShoppingCart> updateProduceQuantity(@PathVariable int prodctId, @RequestBody CartItem cartItem, Principal principal){
+        User user = userService.getByUserName(principal.getName());
+        ShoppingCart cart = shoppingCartService.updateQuantity(user,prodctId, cartItem.getQuantity());
+        return ResponseEntity.ok(cart);
+    }
 
     // add a DELETE method to clear all products from the current users cart
     // https://localhost:8080/cart  - return the (now empty) cart so the front end can refresh it (200 OK)
