@@ -1,10 +1,7 @@
 package org.yearup.service;
 
 import org.springframework.stereotype.Service;
-import org.yearup.models.CartItem;
-import org.yearup.models.Product;
-import org.yearup.models.ShoppingCart;
-import org.yearup.models.ShoppingCartItem;
+import org.yearup.models.*;
 import org.yearup.repository.ShoppingCartRepository;
 
 import java.util.List;
@@ -40,6 +37,39 @@ public class ShoppingCartService
             cart.add(cartItem);
         }
         return cart;
+    }
+
+    public ShoppingCart addProduct(User user, int productId){
+        Product product = productService.getById(productId);
+
+        if (product == null){
+            throw new RuntimeException("Product not found.");
+        }
+        CartItem cartItem = shoppingCartRepository.findByUserIdAndProductId(user.getId(), productId);
+
+        if (cartItem != null){
+            cartItem.setQuantity(cartItem.getQuantity() + 1);
+        }else{
+            cartItem = new CartItem();
+            cartItem.setUserId(user.getId());
+            cartItem.setProductId(productId);
+            cartItem.setQuantity(1);
+        }
+        shoppingCartRepository.save(cartItem);
+
+        return getByUserId(user.getId());
+    }
+
+    public ShoppingCart updateQuantity(User user, int productId, int quantity){
+        CartItem cartItem = shoppingCartRepository.findByUserIdAndProductId(user.getId(), productId);
+
+        if (cartItem == null){
+            throw new RuntimeException("Product not found in cart.");
+        }
+        cartItem.setQuantity(quantity);
+        shoppingCartRepository.save(cartItem);
+
+        return getByUserId(user.getId());
     }
 
     // Shows items in the cart
