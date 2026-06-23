@@ -42,13 +42,25 @@ public class ShoppingCartService
         return cart;
     }
 
-    // add additional methods here
+    // Shows items in the cart
     public CartItem getCartItem(int userId, int productId) {
         return shoppingCartRepository.findByUserIdAndProductId(userId,productId);
     }
 
-    public void clearCart(int userId){
+    //allows the user to remove 1 Item from their cart.
+    public ShoppingCart removeItem(int userId, int productId){
+        CartItem item = shoppingCartRepository.findByUserIdAndProductId(userId, productId);
+        if (item != null){
+            shoppingCartRepository.delete(item);
+        }
+        return getByUserId(userId);
+    }
+
+    // Clears out the users shopping cart
+    public ShoppingCart clearCart(int userId){
         shoppingCartRepository.deleteByUserId(userId);
+
+        return getByUserId(userId);
     }
 
 }

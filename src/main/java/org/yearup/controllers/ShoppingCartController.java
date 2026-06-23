@@ -1,5 +1,10 @@
 package org.yearup.controllers;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.yearup.models.ShoppingCart;
 import org.yearup.models.User;
 import org.yearup.service.ShoppingCartService;
@@ -9,13 +14,14 @@ import java.security.Principal;
 
 // convert this class to a REST controller
 // only logged in users should have access to these actions
+
+@RestController
+@RequestMapping("cart")
 public class ShoppingCartController
 {
     // a shopping cart controller depends on the service layer
     private ShoppingCartService shoppingCartService;
     private UserService userService;
-
-
 
     // each method in this controller requires a Principal object as a parameter
     public ShoppingCart getCart(Principal principal)
@@ -42,5 +48,13 @@ public class ShoppingCartController
 
     // add a DELETE method to clear all products from the current users cart
     // https://localhost:8080/cart  - return the (now empty) cart so the front end can refresh it (200 OK)
+    @DeleteMapping("")
+    public ResponseEntity<ShoppingCart> clearCart(Principal principal){
+        String userName = principal.getName();
+        User user = userService.getByUserName(userName);
 
+        int userId = user.getId();
+        ShoppingCart cart = shoppingCartService.clearCart(userId);
+        return ResponseEntity.ok(cart);
+    }
 }
