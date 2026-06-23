@@ -1,10 +1,8 @@
 package org.yearup.controllers;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.yearup.models.ShoppingCart;
 import org.yearup.models.User;
 import org.yearup.service.ShoppingCartService;
@@ -24,16 +22,21 @@ public class ShoppingCartController
     private UserService userService;
 
     // each method in this controller requires a Principal object as a parameter
-    public ShoppingCart getCart(Principal principal)
+    @GetMapping
+    public ResponseEntity<ShoppingCart> getCart(Principal principal)
     {
+        if (principal == null){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
         // get the currently logged in username
         String userName = principal.getName();
         // find database user by username
         User user = userService.getByUserName(userName);
         int userId = user.getId();
 
+        ShoppingCart cart = shoppingCartService.getByUserId(userId);
         // use the shoppingCartService to get all items in the cart and return the cart
-        return null;
+        return ResponseEntity.ok(cart);
     }
 
     // add a POST method to add a product to the cart - the url should be
@@ -49,12 +52,8 @@ public class ShoppingCartController
     // add a DELETE method to clear all products from the current users cart
     // https://localhost:8080/cart  - return the (now empty) cart so the front end can refresh it (200 OK)
     @DeleteMapping("")
-    public ResponseEntity<ShoppingCart> clearCart(Principal principal){
-        String userName = principal.getName();
-        User user = userService.getByUserName(userName);
-
-        int userId = user.getId();
-        ShoppingCart cart = shoppingCartService.clearCart(userId);
-        return ResponseEntity.ok(cart);
+    public ResponseEntity<ShoppingCart> clearCart(){
+        //todo:figure out later.
+        return null;
     }
 }
