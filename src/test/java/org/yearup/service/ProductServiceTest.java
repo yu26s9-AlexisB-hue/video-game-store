@@ -50,11 +50,17 @@ class ProductServiceTest {
 
    @Test
     //Trying to see if bug 2 is in the productService
-   //The Service is not the problem
-    void editingTheProduct_ShouldEditEverything(){
+   //expected: <25> but was: <15>
+      //	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+      //	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+      //	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+      //	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+      //	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:147)
+      //	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:558)
+   //The service update was missing an update for the stock. The issue is now solved.
+    void editingTheProduct_ShouldEditEverything() {
 
        Integer id = 1;
-
        Product currentProduct = new Product();
        currentProduct.setProductId(id);
        currentProduct.setName("Saints Row 2");
@@ -66,21 +72,22 @@ class ProductServiceTest {
        currentProduct.setFeatured(true);
        currentProduct.setImageUrl("SaintsRow2.jpg");
 
-
        Product updatedProduct = new Product();
        updatedProduct.setPrice(49.99);
-       updatedProduct.setDescription(" is a 2008 action-adventure game developed by Volition and published by THQ.");
+       updatedProduct.setDescription("is a 2008 action-adventure game developed by Volition and published by THQ.");
        updatedProduct.setSubCategory("Open World Game");
-
+       updatedProduct.setStock(25); // the issue according to the textbook.
 
        when(productRepository.findById(id)).thenReturn(Optional.of(currentProduct));
-       when(productRepository.save(any(Product.class))).thenAnswer(invocation -> invocation.getArgument(0));
+       when(productRepository.save(any(Product.class)))
+               .thenAnswer(invocation -> invocation.getArgument(0));
 
-       Product result = productService.update(id,updatedProduct);
+       Product result = productService.update(id, updatedProduct);
 
        assertEquals(49.99, result.getPrice());
-       assertEquals(" is a 2008 action-adventure game developed by Volition and published by THQ.", result.getDescription());
+       assertEquals("is a 2008 action-adventure game developed by Volition and published by THQ.", result.getDescription());
        assertEquals("Open World Game", result.getSubCategory());
+       assertEquals(25, result.getStock());
 
        verify(productRepository).findById(id);
        verify(productRepository).save(currentProduct);
