@@ -19,8 +19,13 @@ import java.security.Principal;
 public class ShoppingCartController
 {
     // a shopping cart controller depends on the service layer
-    private ShoppingCartService shoppingCartService;
-    private UserService userService;
+    private final ShoppingCartService shoppingCartService;
+    private final UserService userService;
+
+    public ShoppingCartController(ShoppingCartService shoppingCartService, UserService userService) {
+        this.shoppingCartService = shoppingCartService;
+        this.userService = userService;
+    }
 
     // each method in this controller requires a Principal object as a parameter
     @GetMapping
@@ -69,9 +74,18 @@ public class ShoppingCartController
 
     // add a DELETE method to clear all products from the current users cart
     // https://localhost:8080/cart  - return the (now empty) cart so the front end can refresh it (200 OK)
-    @DeleteMapping("")
-    public ResponseEntity<ShoppingCart> clearCart(){
-        //todo:figure out later.
-        return null;
+    @DeleteMapping
+    public ResponseEntity<ShoppingCart> clearCart(Principal principal){
+        if (principal == null){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        String username = principal.getName();
+        User user = userService.getByUserName(username);
+        int userId = user.getId();
+
+        ShoppingCart cart = shoppingCartService.clearCart(userId);
+
+        return ResponseEntity.ok(cart);
     }
 }
