@@ -1,7 +1,9 @@
 package org.yearup.service;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 import org.yearup.models.*;
 import org.yearup.repository.OrderLineItemRepository;
 import org.yearup.repository.OrderRepository;
@@ -26,7 +28,14 @@ public class OrderService {
 
     @Transactional
     public Order checkout(int userId){
+
        ShoppingCart cart = shoppingCartService.getByUserId(userId);
+
+       //check if the cart is empty.
+       if (cart.getItems().isEmpty()){
+           throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Cannot checkout with an empty cart");
+       }
+
         Profile profile = profileService.getProfileByUserId(userId);
         Order order = new Order();
         order.setUserId(userId);
