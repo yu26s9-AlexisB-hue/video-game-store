@@ -1,6 +1,7 @@
 package org.yearup.controllers;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +32,7 @@ public class OrderController {
         String username = principal.getName();
         User user = userservice.getByUserName(username);
         Order order = orderService.checkout(user.getId());
-        return ResponseEntity.ok(order);
+        return ResponseEntity.status(HttpStatus.CREATED).body(order);
     }
 
 }

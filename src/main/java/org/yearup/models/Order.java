@@ -28,7 +28,7 @@ public class Order {
     private String state;
 
     @Column(name = "zip")
-    private long zip;
+    private String zip;
 
     @Column(name = "shipping_amount")
     private BigDecimal shippingAmount;
@@ -37,7 +37,7 @@ public class Order {
 
     }
 
-    public Order(int orderId, int userId, LocalDate date, String address, String city, String state, long zip, BigDecimal shippingAmount) {
+    public Order(int orderId, int userId, LocalDate date, String address, String city, String state, String zip, BigDecimal shippingAmount) {
         this.orderId = orderId;
         this.userId = userId;
         this.date = date;
@@ -96,11 +96,11 @@ public class Order {
         this.state = state;
     }
 
-    public long getZip() {
+    public String getZip() {
         return zip;
     }
 
-    public void setZip(long zip) {
+    public void setZip(String zip) {
         this.zip = zip;
     }
 
