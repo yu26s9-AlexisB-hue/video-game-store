@@ -39,7 +39,7 @@ public class ShoppingCart
                             .mapToDouble(i -> i.getLineTotal())
                             .sum();
 
-        return total;
+        return Math.round(total * 100.0)/100.0;
     }
 
 }
