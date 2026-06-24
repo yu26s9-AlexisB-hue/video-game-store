@@ -66,9 +66,9 @@ public class ShoppingCartController
     // https://localhost:8080/cart/products/15  (15 is the productId to be updated)
     // the BODY should be a ShoppingCartItem - quantity is the only value that will be updated; return the cart (200 OK)
     @PutMapping("/products/{productId}")
-    public ResponseEntity<ShoppingCart> updateProduceQuantity(@PathVariable int prodctId, @RequestBody CartItem cartItem, Principal principal){
+    public ResponseEntity<ShoppingCart> updateProduceQuantity(@PathVariable int productId, @RequestBody CartItem cartItem, Principal principal){
         User user = userService.getByUserName(principal.getName());
-        ShoppingCart cart = shoppingCartService.updateQuantity(user,prodctId, cartItem.getQuantity());
+        ShoppingCart cart = shoppingCartService.updateQuantity(user,productId, cartItem.getQuantity());
         return ResponseEntity.ok(cart);
     }
 
