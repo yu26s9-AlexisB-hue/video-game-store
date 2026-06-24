@@ -1,6 +1,7 @@
 package org.yearup.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.yearup.models.*;
 import org.yearup.repository.ShoppingCartRepository;
 
@@ -39,6 +40,7 @@ public class ShoppingCartService
         return cart;
     }
 
+    @Transactional
     public ShoppingCart addProduct(User user, int productId){
         Product product = productService.getById(productId);
 
@@ -60,6 +62,7 @@ public class ShoppingCartService
         return getByUserId(user.getId());
     }
 
+    @Transactional
     public ShoppingCart updateQuantity(User user, int productId, int quantity){
         CartItem cartItem = shoppingCartRepository.findByUserIdAndProductId(user.getId(), productId);
 
@@ -74,11 +77,14 @@ public class ShoppingCartService
 
     // Shows items in the cart
     public CartItem getCartItem(int userId, int productId) {
+        //todo:Create a controller for this as well.
         return shoppingCartRepository.findByUserIdAndProductId(userId,productId);
     }
 
     //allows the user to remove 1 Item from their cart.
+    @Transactional
     public ShoppingCart removeItem(int userId, int productId){
+        //todo: create a controller for this method
         CartItem item = shoppingCartRepository.findByUserIdAndProductId(userId, productId);
         if (item != null){
             shoppingCartRepository.delete(item);
@@ -87,6 +93,8 @@ public class ShoppingCartService
     }
 
     // Clears out the users shopping cart
+    @Transactional
+    //Learning to add transactional to code modifies the data.
     public ShoppingCart clearCart(int userId){
         shoppingCartRepository.deleteByUserId(userId);
 
