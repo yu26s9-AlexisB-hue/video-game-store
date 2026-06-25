@@ -70,10 +70,6 @@ API Testing:
 All endpoints were tested using Insomnia.
 
 
-
-***\*POSSIBLY ADD SCREEN SHOTS HERE\****
-
-&#x09;***could be screenshots of the homepage, product search, shopping cart, checkout, insomnia testing.***
 ![image_alt](https://github.com/yu26s9-AlexisB-hue/video-game-store/blob/11c2b4526814ad3cb88b50a2c1eeebbc2a3c7ebe/Screenshot%202026-06-25%20160236.png)
 
 
@@ -82,7 +78,7 @@ Interesting Code:
 
 The piece of code that I found to be the most interest is my checkout method in the service layer of my order class. I am the proudest of this code because at this point it was like the moment of truth on weather I created the models and repositories correctly for this service layer to work. There was a lot of trial and error in order to make this layer run smoothly. I felt truly accomplished when this method was completed.
 
-
+![image_alt](https://github.com/yu26s9-AlexisB-hue/video-game-store/blob/f7793b12712f11d804c02abf5dec96a7018ef567/Screenshot%202026-06-25%20160423.png)
 
 
 
