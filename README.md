@@ -72,6 +72,7 @@ All endpoints were tested using Insomnia.
 ***\*POSSIBLY ADD SCREEN SHOTS HERE\****
 
 &#x09;***could be screenshots of the homepage, product search, shopping cart, checkout, insomnia testing.***
+![image_alt](https://github.com/yu26s9-AlexisB-hue/video-game-store/blob/dfeeec889c2b47c2a1a2672f3d3ba915a646521d/Screenshot%202026-06-25%20160118.png)
 
 
 
