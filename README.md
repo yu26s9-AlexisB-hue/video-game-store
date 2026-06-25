@@ -35,6 +35,7 @@ New Features Implemented:
 
 Project Board:
 I used my project board more so as a check list. I used my user stories to give me more context for the feature that I was creating.
+
 ![image_alt](https://github.com/yu26s9-AlexisB-hue/video-game-store/blob/37807314fd4f9bb71403fc437c2115536a0c5756/Screenshot%202026-06-25%20163837.png)
 
 
