@@ -16,6 +16,7 @@ import java.security.Principal;
 
 @RestController
 @RequestMapping("cart")
+@CrossOrigin
 public class ShoppingCartController
 {
     // a shopping cart controller depends on the service layer
