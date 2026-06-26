@@ -85,5 +85,8 @@ The piece of code that I found to be the most interest is my checkout method in 
 
 ![image_alt](https://github.com/yu26s9-AlexisB-hue/video-game-store/blob/f7793b12712f11d804c02abf5dec96a7018ef567/Screenshot%202026-06-25%20160423.png)
 
+Future Features:
+I would like to add a feature that allows the user to add a profile to their user name. I also would to a feature that allows the users to rate the games from 1 to 5. I also would like to the ability to view trailers for the game as well.
+
 
 
